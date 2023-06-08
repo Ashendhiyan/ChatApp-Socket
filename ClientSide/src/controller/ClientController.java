@@ -6,46 +6,45 @@ import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javafx.scene.image.ImageView;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+
 
 public class ClientController extends Thread {
+    public TextArea txtArea;
     public AnchorPane root;
     public TextField txtMsg;
-    public TextArea txtArea;
-
     public ImageView imageView;
-
-    Socket remoteSocket;
-    BufferedReader reader;
-    PrintWriter writer;
 
     private FileChooser fileChooser;
     private File filePath;
 
+    BufferedReader reader;
+    PrintWriter writer;
+    Socket socket;
+    ObjectOutputStream oos = null;
+
+    final int PORT = 5000;
+
+
 
     public void initialize() {
-        new Thread(() -> {
-            final int PORT = 5000;
-            try {
-                remoteSocket = new Socket("localhost", PORT);
-                System.out.println("Socket is connected with server..!");
-                reader = new BufferedReader(new InputStreamReader(remoteSocket.getInputStream()));
-                writer = new PrintWriter(remoteSocket.getOutputStream(), true);
-                this.start();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        }).start();
+        try {
+            socket = new Socket("localhost", PORT);
+            System.out.println("Socket is connected with server!");
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+            writer = new PrintWriter(socket.getOutputStream(), true);
+            this.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -70,10 +69,14 @@ public class ClientController extends Thread {
             }
             reader.close();
             writer.close();
-            remoteSocket.close();
+            socket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void imgCloseOnAction(MouseEvent mouseEvent) {
+        System.exit(0);
     }
 
     public void imgMinOnAction(MouseEvent mouseEvent) {
@@ -81,24 +84,21 @@ public class ClientController extends Thread {
         s.setIconified(true);
     }
 
-    public void imgCloseOnAction(MouseEvent mouseEvent) {
-        System.exit(0);
-    }
-
-    public void txtMsgOnAction(ActionEvent actionEvent) throws IOException {
-        btnSendOnAction(actionEvent);
-    }
-
-    public void btnSendOnAction(ActionEvent actionEvent) throws IOException {
-        String messageText = txtMsg.getText().trim();
-        writer.println(ClientLoginController.username + " : " + messageText);
+    public void txtMsgOnAction(ActionEvent actionEvent) {
+        String msg = txtMsg.getText().trim();
+        writer.println(ClientLoginController.username + ": " + msg);
         txtArea.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-        txtArea.appendText("Me : " + messageText + "\n");
+        txtArea.appendText("Me: " + msg + "\n");
         txtMsg.setText("");
-        if ((messageText.equals("BYE")) || (messageText.equals("bye"))) {
+        if ((msg.equals("BYE")) || (msg.equals("bye"))) {
             System.exit(0);
         }
     }
+
+    public void btnSendOnAction(ActionEvent actionEvent) {
+        txtMsgOnAction(actionEvent);
+    }
+
 
     public void imgImageOnAction(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
@@ -112,5 +112,6 @@ public class ClientController extends Thread {
         Panel panel = new Panel();
         imageView.setImage(image);
         root.getChildren().add(imageView);
+
     }
 }

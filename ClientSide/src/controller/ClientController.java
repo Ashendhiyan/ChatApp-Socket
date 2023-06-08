@@ -5,15 +5,15 @@ import javafx.geometry.NodeOrientation;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import javafx.scene.image.ImageView;
+import java.awt.*;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
@@ -28,6 +28,9 @@ public class ClientController extends Thread {
     BufferedReader reader;
     PrintWriter writer;
 
+    private FileChooser fileChooser;
+    private File filePath;
+
 
     public void initialize() {
         new Thread(() -> {
@@ -35,7 +38,7 @@ public class ClientController extends Thread {
             try {
                 remoteSocket = new Socket("localhost", PORT);
                 System.out.println("Socket is connected with server..!");
-                reader = new BufferedReader(new InputStreamReader(remoteSocket.getInputStream(), StandardCharsets.UTF_8));
+                reader = new BufferedReader(new InputStreamReader(remoteSocket.getInputStream()));
                 writer = new PrintWriter(remoteSocket.getOutputStream(), true);
                 this.start();
             } catch (IOException e) {
@@ -98,5 +101,16 @@ public class ClientController extends Thread {
     }
 
     public void imgImageOnAction(MouseEvent mouseEvent) {
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image");
+        this.filePath = fileChooser.showOpenDialog(stage);
+        String path = filePath.getPath();
+        System.out.println(path);
+        Image image = new Image(path);
+        imageView = new ImageView();
+        Panel panel = new Panel();
+        imageView.setImage(image);
+        root.getChildren().add(imageView);
     }
 }

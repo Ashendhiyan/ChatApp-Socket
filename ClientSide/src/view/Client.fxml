@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="650.0" prefWidth="500.0" style="-fx-background-color: #222f3e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientController">
+   <children>
+      <Label layoutX="48.0" layoutY="16.0" text="Chat Room - Play Tech" textFill="#dfe4ea">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="37.0" fitWidth="43.0" layoutX="439.0" layoutY="15.0" onMouseReleased="#imgCloseOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/icons8-close-window-96.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="37.0" layoutX="402.0" layoutY="19.0" onMouseReleased="#imgMinOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/minus.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Separator layoutX="12.0" layoutY="64.0" prefHeight="3.0" prefWidth="470.0" />
+      <TextField fx:id="txtMsg" layoutX="61.0" layoutY="580.0" onAction="#txtMsgOnAction" prefHeight="37.0" prefWidth="320.0" style="-fx-font-size: 17; -fx-background-radius: 20px;" />
+      <JFXButton buttonType="RAISED" layoutX="387.0" layoutY="578.0" onAction="#btnSendOnAction" prefHeight="30.0" prefWidth="102.0" ripplerFill="#a104a1" style="-fx-background-color: #1B9CFC#1B9CFC; -fx-background-radius: 20px;" text="Send" textFill="#cdcccc">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="25.0" layoutY="584.0" onMouseReleased="#imgImageOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/icons8-camera-96.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <TextArea fx:id="txtArea" layoutX="22.0" layoutY="86.0" prefHeight="473.0" prefWidth="459.0" style="-fx-font-size: 17; -fx-border-color: #10ac84; -fx-border-width: 4px; -fx-border-radius: 10px; -fx-background-radius: 10px;" />
+   </children>
+</AnchorPane>

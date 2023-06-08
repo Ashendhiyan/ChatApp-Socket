@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: #222f3e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientLoginController">
+   <children>
+      <Label layoutX="24.0" layoutY="18.0" text="Login" textFill="#c2ff00">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtUserName" focusColor="#1441c9" labelFloat="true" layoutX="24.0" layoutY="100.0" onAction="#txtUserName" prefHeight="49.0" prefWidth="347.0" promptText="User Name" style="-fx-font-size: 25; -fx-text-fill: #ffffff;" unFocusColor="#dad5d5">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton buttonType="RAISED" layoutX="414.0" layoutY="112.0" onAction="#btnLoginOnAction" prefHeight="51.0" prefWidth="163.0" style="-fx-background-color: #48dbfb; -fx-background-radius: 15px;" text="Login" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="29.0" fitWidth="31.0" layoutX="555.0" layoutY="14.0" onMouseReleased="#imgCloseOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/icons8-close-window-96.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="29.0" fitWidth="31.0" layoutX="524.0" layoutY="14.0" onMouseReleased="#imgMinOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/icons8-macos-minimize-90.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</AnchorPane>
